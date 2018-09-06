@@ -1,0 +1,70 @@
+2018-09-05 12:44:02,014 ERROR main.MudrodEngine - Error whilst parsing command line.
+org.apache.commons.cli.MissingOptionException: Missing required option: dataDir
+	at org.apache.commons.cli.Parser.checkRequiredOptions(Parser.java:299)
+	at org.apache.commons.cli.Parser.parse(Parser.java:231)
+	at org.apache.commons.cli.Parser.parse(Parser.java:85)
+	at org.apache.sdap.mudrod.main.MudrodEngine.main(MudrodEngine.java:336)
+2018-09-05 12:47:28,780 INFO  main.MudrodEngine - File specified by environment variable MUDROD_CONFIG = '' could not be loaded. Default configuration will be used.
+2018-09-05 12:47:28,780 INFO  main.MudrodEngine - Loaded config file from /C:/Users/no281/Documents/GitHub/incubator-sdap-mudrod/core/target/classes/config.properties
+2018-09-05 12:47:28,780 INFO  main.MudrodEngine - Fail to load the sytem config file
+2018-09-05 12:47:32,770 WARN  util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-09-05 12:47:34,491 INFO  util.log - Logging initialized @6315ms
+2018-09-05 12:47:34,590 INFO  server.Server - jetty-9.2.z-SNAPSHOT
+2018-09-05 12:47:34,610 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@30517a57{/jobs,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@3dde5f38{/jobs/json,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@79ad1774{/jobs/job,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@64f3ca6{/jobs/job/json,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@3df77dfa{/stages,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@721fc2e3{/stages/json,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@63187d63{/stages/stage,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@1ccdc7aa{/stages/stage/json,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@1a536164{/stages/pool,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@1657b017{/stages/pool/json,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@368424db{/storage,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@44864536{/storage/json,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@455f4483{/storage/rdd,null,AVAILABLE}
+2018-09-05 12:47:34,615 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@6e239337{/storage/rdd/json,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@7996d0d4{/environment,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@fcf9525{/environment/json,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@300bb303{/executors,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@4243341e{/executors/json,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@d1c5cf2{/executors/threadDump,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@7e0986c9{/executors/threadDump/json,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@1377b1a0{/static,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@48cf8414{/,null,AVAILABLE}
+2018-09-05 12:47:34,620 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@27dbaa33{/api,null,AVAILABLE}
+2018-09-05 12:47:34,630 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@15d65fcf{/jobs/job/kill,null,AVAILABLE}
+2018-09-05 12:47:34,630 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@3b021664{/stages/stage/kill,null,AVAILABLE}
+2018-09-05 12:47:34,650 INFO  server.ServerConnector - Started ServerConnector@ced477f{HTTP/1.1}{0.0.0.0:4040}
+2018-09-05 12:47:34,650 INFO  server.Server - Started @6471ms
+2018-09-05 12:47:35,074 INFO  handler.ContextHandler - Started o.s.j.s.ServletContextHandler@3e9fb485{/metrics/json,null,AVAILABLE}
+2018-09-05 12:47:36,634 INFO  discoveryengine.MetadataDiscoveryEngine - Starting metadata preprocessing...
+2018-09-05 12:47:36,634 INFO  pre.ApiHarvester - Starting Metadata harvesting.
+2018-09-05 12:47:38,931 INFO  pre.ApiHarvester - Metadata harvesting completed. Time elapsed: 2
+2018-09-05 12:47:38,931 INFO  discoveryengine.MetadataDiscoveryEngine - Finished metadata preprocessing. Time elapsed: 2s
+2018-09-05 12:47:38,984 INFO  server.ServerConnector - Stopped ServerConnector@ced477f{HTTP/1.1}{0.0.0.0:4040}
+2018-09-05 12:47:38,984 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@3b021664{/stages/stage/kill,null,UNAVAILABLE}
+2018-09-05 12:47:38,984 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@15d65fcf{/jobs/job/kill,null,UNAVAILABLE}
+2018-09-05 12:47:38,984 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@27dbaa33{/api,null,UNAVAILABLE}
+2018-09-05 12:47:38,984 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@48cf8414{/,null,UNAVAILABLE}
+2018-09-05 12:47:38,984 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@1377b1a0{/static,null,UNAVAILABLE}
+2018-09-05 12:47:38,984 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@7e0986c9{/executors/threadDump/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@d1c5cf2{/executors/threadDump,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@4243341e{/executors/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@300bb303{/executors,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@fcf9525{/environment/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@7996d0d4{/environment,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@6e239337{/storage/rdd/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@455f4483{/storage/rdd,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@44864536{/storage/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@368424db{/storage,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@1657b017{/stages/pool/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@1a536164{/stages/pool,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@1ccdc7aa{/stages/stage/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@63187d63{/stages/stage,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@721fc2e3{/stages/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@3df77dfa{/stages,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@64f3ca6{/jobs/job/json,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@79ad1774{/jobs/job,null,UNAVAILABLE}
+2018-09-05 12:47:38,991 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@3dde5f38{/jobs/json,null,UNAVAILABLE}
+2018-09-05 12:47:39,001 INFO  handler.ContextHandler - Stopped o.s.j.s.ServletContextHandler@30517a57{/jobs,null,UNAVAILABLE}
