@@ -11,8 +11,8 @@
   express or implied. See the License for the specific language 
   governing permissions and limitations under the License. 
   -->
+<meta charset="utf-8"> 
 <div ng-include src="'partials/navbar-search.html'"></div>
-
 <div id="container" class="container view-area-fixed">
     <div class="row no-gutter content-holder">
         <div class="col-md-9 col-sm-8" id="content">
@@ -26,11 +26,11 @@
                     <table class="table table-strip">
                         <tbody>
                         <tr>
-                            <td>Long Name</td>
+                            <td>长命名</td>
                             <td>{{dataset['Long Name']}}</td>
                         </tr>
                         <tr>
-                            <td>Landing Page</td>
+                            <td>主页</td>
                             <td>
                                 <a ng-href="https://podaac.jpl.nasa.gov/dataset/{{dataset['Short Name'] | urlencode}}" target="_blank">https://podaac.jpl.nasa.gov/dataset/{{dataset['Short Name']}}</a>
                             </td>
@@ -39,11 +39,11 @@
                             <td>DOI</td>
                             <td>
                                 <a ng-if="dataset['Dataset-Doi']" ng-href="https://podaac.jpl.nasa.gov/dataset/{{dataset['Short Name'] | urlencode}}" target="_blank">{{dataset['Dataset-Doi']}}</a>
-                                <span ng-if="!dataset['Dataset-Doi']">Not Registered</span>
+                                <span ng-if="!dataset['Dataset-Doi']">未记录</span>
                             </td>
                         </tr>
                         <tr>
-                            <td>Measurement</td>
+                            <td>测量描述</td>
                             <td>
                                 <p ng-repeat="measurement in dataset['Measurements'] track by $index">
                                     <span ng-repeat="element in measurement track by $index"><a ng-href="#/metadataView?query={{element | urlencode}}">{{element}}</a>{{$last ? '' : ' > '}}</span>
@@ -51,54 +51,54 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Version</td>
+                            <td>版本</td>
                             <td>{{dataset['Version'].join(', ')}}</td>
                         </tr>
                         <tr>
-                            <td>Description</td>
+                            <td>介绍</td>
                             <td>{{dataset['Dataset-Description']}}</td>
                         </tr>
                         <tr>
-                            <td>Processing Level</td>
+                            <td>处理级别</td>
                             <td>{{dataset['Processing Level']}}</td>
                         </tr>
                         <tr>
-                            <td>Coverage</td>
+                            <td>覆盖范围</td>
                             <td>
-                                Region: {{dataset['Region'].join(', ')}}<br>
-                                Northernmost Latitude: {{dataset['NorthLat']}} degrees<br>
-                                Southernmost Latitude: {{dataset['NorthLat']}} degrees<br>
-                                Westernmost Longitude: {{dataset['WestLon']}} degrees<br>
-                                Easternmost Longitude: {{dataset['EastLon']}} degrees<br>
-                                Time Span: {{dataset['Time Span']}}
+                               	 区域： {{dataset['Region'].join(', ')}}<br>
+                               	 最北点纬度： {{dataset['NorthLat']}} 度<br>
+                               	 最南点纬度： {{dataset['NorthLat']}} 度<br>
+                               	 最西点纬度： {{dataset['WestLon']}} 度<br>
+                               	 最东点纬度： {{dataset['EastLon']}} 度<br>
+                               	 时间跨度： {{dataset['Time Span']}}
                             </td>
                         </tr>
                         <tr>
-                            <td>Spatial Resolution</td>
+                            <td>空间分辨率</td>
                             <td>{{dataset['SpatialResolution']}}</td>
                         </tr>
                         <tr>
-                            <td>Temporal Repeat</td>
+                            <td>时间分辨率</td>
                             <td>{{dataset['TemporalResolution']}}</td>
                         </tr>
                         <tr>
-                            <td>Sensor</td>
+                            <td>传感器</td>
                             <td>
                                 <a ng-repeat="sensor in dataset['DatasetSource-Sensor-ShortName']" ng-href="#/metadataView?query={{sensor | urlencode}}">{{sensor}}{{$last ? '' : ', '}}</a>
                             </td>
                         </tr>
                         <tr>
-                            <td>Project</td>
+                            <td>项目</td>
                             <td>
                                 <a ng-repeat="project in dataset['DatasetProject-Project-ShortName']" ng-href="#/metadataView?query={{project | urlencode}}">{{project}}{{$last ? '' : ', '}}</a>
                             </td>
                         </tr>
                         <tr>
-                            <td>Format</td>
+                            <td>文件格式</td>
                             <td>{{dataset['DataFormat']}}</td>
                         </tr>
                         <tr>
-                            <td>Data Access</td>
+                            <td>数据访问</td>
                             <td>
                                 <p ng-repeat="path in dataset['DatasetLocationPolicy-BasePath']">
                                     <a ng-href="{{path}}" target="_blank">{{path}}</a>
@@ -115,7 +115,7 @@
                 <div class="panel panel-primary sidenav">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">Related Datasets</a>
+                            <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">ç›¸å…³æ•°æ�®é›†</a>
                         </h4>
                     </div>
                     <div id="collapse1" class="panel-collapse collapse in">
@@ -132,7 +132,7 @@
                 <div class="panel panel-primary sidenav">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">Related Keyword Searches</a>
+                            <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">ç›¸å…³å…³é”®è¯�æŸ¥æ‰¾</a>
                         </h4>
                     </div>
                     <div id="collapse2" class="panel-collapse collapse in">

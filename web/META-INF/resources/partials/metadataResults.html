@@ -11,8 +11,8 @@
   express or implied. See the License for the specific language 
   governing permissions and limitations under the License. 
   -->
+<meta charset="utf-8"> 
 <div ng-include src="'partials/navbar-search.html'"></div>
-
 <div id="container" class="container view-area-fixed" ng-controller="metadataViewCtrl as vm">
     <div class="row no-gutter content-holder">
         <div class="col-md-9 col-sm-8" id="content">
@@ -26,7 +26,7 @@
             <div class="panel panel-primary sidenav">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">Related Searches</a>
+                        <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">相关查找</a>
                     </h4>
                 </div>
                 <div id="collapse1" class="panel-collapse collapse in">
@@ -36,7 +36,7 @@
                         </div>
 
                         <div ng-if="searchComplete && ontologyList.length === 0" ng-model="searchComplete">
-                            <span style="font-size: 1em;">No related searches found</span>
+                            <span style="font-size: 1em;">未找到相关查找</span>
                         </div>
 
                         <div ng-if="!searchComplete" ng-model="searchComplete" id="spinner">

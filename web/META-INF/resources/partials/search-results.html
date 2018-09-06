@@ -1,21 +1,22 @@
+<meta charset="utf-8">
 <div class="panel panel-primary post-holder">
     <div class="panel-heading">
         <select title="Sort By" class="title rankoption" name="rankOption" id="rankOption" ng-model="vm.rankopt" ng-change="vm.rankData(vm.rankopt)" ng-if="!vm.searchError">
-            <option value="Rank-SVM">Default (Machine Learning Ranking)</option>
-            <option value="Rank-AllTimePopularity">Popularity (All Time)</option>
-            <option value="Rank-MonthlyPopularity">Popularity (This Month)</option>
-            <option value="Rank-UserPopularity">Popularity (Users)</option>
-            <option value="Rank-LongName-Full">Long Name (A-Z)</option>
-            <option value="Rank-ShortName-Full">Short Name (A-Z)</option>
-            <option value="Rank-GridSpatialResolution">Grid Spatial Resolution</option>
-            <option value="Rank-SatelliteSpatialResolution">Satellite Spatial Resolution</option>
-            <option value="Rank-StartTimeLong-Long">Start Date</option>
-            <option value="Rank-StopTimeLong-Long">Stop Date</option>
+            <option value="Rank-SVM">默认 （机器学习排序)</option>
+            <option value="Rank-AllTimePopularity">关注度 (所有时间)</option>
+            <option value="Rank-MonthlyPopularity">关注度 (本月)</option>
+            <option value="Rank-UserPopularity">关注度 (用户)</option>
+            <option value="Rank-LongName-Full">长命名 (A-Z)</option>
+            <option value="Rank-ShortName-Full">短命名 (A-Z)</option>
+            <option value="Rank-GridSpatialResolution">栅格空间分辨率</option>
+            <option value="Rank-SatelliteSpatialResolution">卫星空间分辨率</option>
+            <option value="Rank-StartTimeLong-Long">开始日期</option>
+            <option value="Rank-StopTimeLong-Long">结束日期</option>
         </select>
         <h4 class="panel-title">
-            <strong ng-if="vm.pager.pages.length > 1" class="title">Showing {{vm.items.length}} of {{vm.pager.totalItems}} total match(es)</strong>
-            <strong ng-if="vm.pager.pages.length <= 1" class="title">Showing {{vm.items.length}} total match(es)</strong>
-            <strong ng-if="vm.searchError" class="title">No matches</strong>
+            <strong ng-if="vm.pager.pages.length > 1" class="title">显示 {{vm.pager.totalItems}} 中的 {{vm.items.length}} 条匹配结果</strong>
+            <strong ng-if="vm.pager.pages.length <= 1" class="title">显示 {{vm.items.length}} 条匹配结果</strong>
+            <strong ng-if="vm.searchError" class="title">没有匹配</strong>
         </h4>
     </div>
     <div class="panel-body">
@@ -42,15 +43,15 @@
         <div ng-repeat="pdresult in vm.items">
             <article class="post">
                 <a href="#/datasetView?shortname={{pdresult['Short Name'] | urlencode}}&query={{vm.query | urlencode}}&opt={{vm.opt | urlencode}}">
-                    <strong>Name:</strong> {{pdresult['Short Name']}}
+                    <strong>名称 </strong> {{pdresult['Short Name']}}
                 </a>
-                <br><strong>Long Name:</strong> {{pdresult['Long Name']}}
-                <br><strong>Topic:</strong>
+                <br><strong>长命名：</strong> {{pdresult['Long Name']}}
+                <br><strong>主题：</strong>
                 <span style="color:green" ng-click="vm.searchTopic(pdresult.Topic)">{{pdresult.Topic}}</span>
-                <br><strong>Platform/Sensors:</strong> {{pdresult['Sensor']}}
-                <br><strong>Processing Level:</strong> {{pdresult['Processing Level']}}
-                <br><strong>Start/End Date:</strong> {{pdresult['Start/End Date']}}
-                <br><strong>Description:</strong>
+                <br><strong>平台/传感器：</strong> {{pdresult['Sensor']}}
+                <br><strong>处理级别：</strong> {{pdresult['Processing Level']}}
+                <br><strong>开始/结束日期：</strong> {{pdresult['Start/End Date']}}
+                <br><strong>介绍：</strong>
                 <div ng-init="limit = 150; moreShown = false">
                     {{pdresult.Description | limitTo: limit}}{{pdresult.Description.length > limit ? '...' : ''}}
                     <a ng-show="pdresult.Description.length > limit"
@@ -63,52 +64,52 @@
         <!-- pager -->
         <ul ng-if="vm.pager.pages.length > 1" class="pagination">
             <li ng-class="{disabled:vm.pager.currentPage === 1}">
-                <a ng-click="vm.setPage(1)">First</a>
+                <a ng-click="vm.setPage(1)">首先</a>
             </li>
             <li ng-class="{disabled:vm.pager.currentPage === 1}">
-                <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
+                <a ng-click="vm.setPage(vm.pager.currentPage - 1)">前者</a>
             </li>
             <li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
                 <a ng-click="vm.setPage(page)">{{page}}</a>
             </li>
             <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-                <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
+                <a ng-click="vm.setPage(vm.pager.currentPage + 1)">下一步</a>
             </li>
             <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-                <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
+                <a ng-click="vm.setPage(vm.pager.totalPages)">最后</a>
             </li>
         </ul>
 
         <div ng-show="!vm.searchError && !vm.items.length">
             <article class="post">
-                Your search did not match any dataset.
-                <br>Suggestion
+                	您的搜索不满足在数据集中的匹配
+                <br>建议
                 <ul>
-                    <li>Make sure all words are spelled correctly</li>
-                    <li>Try different keywords</li>
-                    <li>Try different search options</li>
+                    <li>请保证您的拼写没有错误</li>
+                    <li>请尝试不同的关键词</li>
+                    <li>请尝试不同的搜索方法</li>
                 </ul>
             </article>
         </div>
 
         <div ng-show="vm.searchError">
             <article class="post">
-                There was an error while executing your search.
-                <br>Suggestion
+                	您的搜索中存在错误
+                <br>建议
                 <ul>
-                    <li>Make sure all words are spelled correctly</li>
-                    <li>Try different keywords</li>
-                    <li>Try different search options</li>
+                    <li>请保证您的拼写没有错误</li>
+                    <li>请尝试不同的关键词</li>
+                    <li>请尝试不同的搜索方法</li>
                 </ul>
                 <br>
 
-                <a ng-show="!showErrorDetails" ng-click="showErrorDetails = true;">Show error details</a>
+                <a ng-show="!showErrorDetails" ng-click="showErrorDetails = true;">显示报错明细</a>
                 <div ng-show="showErrorDetails" class="animate-show">
                     <span>Error details:</span>
                     <br>
                     <pre>{{vm.searchError | json}}</pre>
                     <br>
-                    <a ng-click="showErrorDetails = false;">Hide error details</a>
+                    <a ng-click="showErrorDetails = false;">隐藏报错明细</a>
                 </div>
             </article>
         </div>
