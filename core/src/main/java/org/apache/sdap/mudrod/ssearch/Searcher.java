@@ -31,6 +31,9 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortOrder;
 
 import java.io.Serializable;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -70,6 +73,12 @@ public class Searcher extends MudrodAbstract implements Serializable {
     if (!exists) {
       return new ArrayList<>();
     }
+//    //query = "平";
+//    byte[] ptext = query.getBytes(Charset.forName("UTF-8")); 
+//    String value = new String(ptext, Charset.forName("UTF-8")); 
+//    query = value;
+
+    
 
     SortOrder order = null;
     String sortFiled = "";
@@ -120,14 +129,18 @@ public class Searcher extends MudrodAbstract implements Serializable {
     BoolQueryBuilder qb = dp.createSemQuery(query, 1.0, queryOperator);
     List<SResult> resultList = new ArrayList<>();
     SearchRequestBuilder builder = es.getClient().prepareSearch(index).setTypes(type).setQuery(qb).addSort(sortFiled, order).setSize(500).setTrackScores(true);
+    System.out.print(qb);
     SearchResponse response = builder.execute().actionGet();
 
     SResult r = new SResult();
+    
+    
     for (SearchHit hit : response.getHits().getHits()) {
       SResult re = r.makeResult(props.getProperty(MudrodConstants.RANKING_META_FORMAT), hit);
       resultList.add(re);
     }
 
+    //System.out.println(resultList.size());
     return resultList;
   }
 

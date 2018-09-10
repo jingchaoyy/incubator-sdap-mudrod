@@ -73,6 +73,8 @@ public class SResult {
       return new Podaac(hit);
     else if(MudrodConstants.PD_META_FORMAT.equals(format))
       return new PlanetDefense(hit);
+    else if(MudrodConstants.Guiyang_META_FORMAT.equals(format))
+      return new Guiyang(hit);
     else
       return null;
   }
