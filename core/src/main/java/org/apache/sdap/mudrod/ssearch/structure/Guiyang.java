@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Customized based on FGDC format for Guiyang project
+
 public class Guiyang extends SResult {
   DecimalFormat NDForm = new DecimalFormat("#.##");
   SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
@@ -38,9 +40,9 @@ public class Guiyang extends SResult {
     System.out.println("You are now in Guiyang version");
     System.out.println(result);
     this.term = Double.valueOf(NDForm.format(hit.getScore()));
-    this.shortName = (String) result.get("title");
+    this.shortName = getTitle(result);
     this.longName = "";
-    this.topic = (String) result.get("gold_keywords");
+    this.topic = getTopic(result);
     this.description = getDescription(result);
     this.releaseDate = 0.0;
     this.startDate = "";
@@ -56,13 +58,11 @@ public class Guiyang extends SResult {
     this.sensors = "";
   }
   
-  public String getDescription(Map<String, Object> result)  {
-	  System.out.println("");
+  public String getDescription(Map<String, Object> result) {
 	  HashMap metadata_Hash = (HashMap) result.get("metadata");
 	  HashMap idinfo_Hash = (HashMap) metadata_Hash.get("idinfo");
-	  HashMap citation_Hash = (HashMap) idinfo_Hash.get("citation");
-	  HashMap citeinfo_Hash = (HashMap) citation_Hash.get("citeinfo");
-	  String content = (String) citeinfo_Hash.get("title");
+	  HashMap descript_Hash = (HashMap) idinfo_Hash.get("descript");
+	  String content = (String) descript_Hash.get("abstract");
 	
 //    String content = (String) title;
 //    if (!"".equals(content)) {
@@ -70,5 +70,25 @@ public class Guiyang extends SResult {
 //      content = content.trim().substring(0, maxLength - 1) + "...";
 //    }
     return content;
+  }
+  
+  public String getTitle(Map<String, Object> result) {
+	  HashMap metadata_Hash = (HashMap) result.get("metadata");
+	  HashMap idinfo_Hash = (HashMap) metadata_Hash.get("idinfo");
+	  HashMap citation_Hash = (HashMap) idinfo_Hash.get("citation");
+	  HashMap citeinfo_Hash = (HashMap) citation_Hash.get("citeinfo");
+	  String title = (String) citeinfo_Hash.get("title");
+	  
+	  return title;
+  }
+  
+  public String getTopic(Map<String, Object> result) {
+	  HashMap metadata_Hash = (HashMap) result.get("metadata");
+	  HashMap idinfo_Hash = (HashMap) metadata_Hash.get("idinfo");
+	  HashMap keywords_Hash = (HashMap) idinfo_Hash.get("keywords");
+	  HashMap theme_Hash = (HashMap) keywords_Hash.get("theme");
+	  String topic = (String) theme_Hash.get("themekey");
+	  
+	  return topic;
   }
 }
