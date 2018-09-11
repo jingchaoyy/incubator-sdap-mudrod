@@ -149,13 +149,14 @@ mudrodControllers.controller('metadataViewCtrl', ['$rootScope', '$scope', '$loca
 
         $scope.searchMetadataBbox = function (options) {
             
-            var topLeft = options[0].toString();
-            var bottomRight = options[2].toString();
+            var topLeft = options[1].toString();
+            var bottomRight = options[3].toString();
             var bb = topLeft + "," + bottomRight;
             searchMetadataWithBBOX(bb);
         }
 
         function searchMetadataWithBBOX(bb) {
+            console.log(bb);
             MetaData.get({query: word, operator: opt, rankoption: rankopt, bbox: bb},
                 function success(response) {
                     vm.PDItems = response.PDResults;
