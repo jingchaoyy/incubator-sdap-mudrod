@@ -260,6 +260,7 @@ public class ESDriver implements Serializable {
     fieldsToReturn.put("DatasetParameter-Topic", "Topic");
     fieldsToReturn.put("Dataset-Description", "Dataset-Description");
     fieldsToReturn.put("DatasetCitation-ReleaseDateLong", "Release Date");
+    System.out.println(fieldsToReturn.keySet());
 
     if (bDetail) {
       fieldsToReturn.put("DatasetPolicy-DataFormat", "DataFormat");

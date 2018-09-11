@@ -91,4 +91,18 @@ public class Guiyang extends SResult {
 	  
 	  return topic;
   }
+  
+  public String getValue(Map<String, Object> result, String name) {
+	  String[] names = name.split(".");
+	  for(String s : names) {
+		  HashMap metadata_Hash = (HashMap) result.get(s);
+	  }
+	  HashMap metadata_Hash = (HashMap) result.get("metadata");
+	  HashMap idinfo_Hash = (HashMap) metadata_Hash.get("idinfo");
+	  HashMap keywords_Hash = (HashMap) idinfo_Hash.get("keywords");
+	  HashMap theme_Hash = (HashMap) keywords_Hash.get("theme");
+	  String topic = (String) theme_Hash.get("themekey");
+	  
+	  return topic;
+  }
 }
