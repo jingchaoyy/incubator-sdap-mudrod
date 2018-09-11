@@ -156,7 +156,7 @@ public interface MudrodConstants {
   
   public static final String PD_META_FORMAT = "pd";
   
-  public static final String Guiyang_META_FORMAT = "Guiyang";
+  public static final String GUIYANG_META_FORMAT = "Guiyang";
 
   public static final String REQUEST_TIME_GAP = "mudrod.request.time.gap";
 

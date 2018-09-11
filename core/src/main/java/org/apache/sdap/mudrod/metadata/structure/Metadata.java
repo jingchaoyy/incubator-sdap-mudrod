@@ -21,6 +21,9 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.sdap.mudrod.driver.ESDriver;
 import org.elasticsearch.common.geo.builders.EnvelopeBuilder;
+import org.elasticsearch.common.geo.builders.ShapeBuilders;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 public abstract class Metadata implements Serializable {
 
@@ -51,11 +54,23 @@ public abstract class Metadata implements Serializable {
 	}
 
 	/**
-	 * getAbstract:get abstract of data set
+	 * getAbstract:get abstract of dparseBoundingBoxata set
 	 *
 	 * @return data set abstract
 	 */
 	public abstract List<String> getAllTermList();
+	
+	public abstract void parseBoundingBox(Map<String, Object> result);
 
-	public abstract EnvelopeBuilder getBoundingBox();
+	public EnvelopeBuilder getBoundingBox() {
+		double top = northLat;
+		double left = westLon;
+		double bottom = southLat;
+		double right = eastLon;
+		EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new Coordinate(top, left),
+				new Coordinate(bottom, right));
+		// EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new
+		// Coordinate(0, 10), new Coordinate(10, 0));
+		return envBuilder;
+	}
 }

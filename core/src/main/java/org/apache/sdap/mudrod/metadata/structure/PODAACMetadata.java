@@ -125,25 +125,6 @@ public class PODAACMetadata extends Metadata {
 			e.printStackTrace();
 		}
 
-		northLat = 0;
-		southLat = 0;
-		westLon = 0;
-		eastLon = 0;
-		if (result.get("DatasetCoverage-NorthLat") != null) {
-			northLat = Double.parseDouble((String) result.get("DatasetCoverage-NorthLat"));
-		}
-
-		if (result.get("DatasetCoverage-SouthLat") != null) {
-			southLat = Double.parseDouble((String) result.get("DatasetCoverage-SouthLat"));
-		}
-
-		if (result.get("DatasetCoverage-WestLon") != null) {
-			westLon = Double.parseDouble((String) result.get("DatasetCoverage-WestLon"));
-		}
-
-		if (result.get("DatasetCoverage-EastLon") != null) {
-			eastLon = Double.parseDouble((String) result.get("DatasetCoverage-EastLon"));
-		}
 	}
 
 	/**
@@ -403,15 +384,27 @@ public class PODAACMetadata extends Metadata {
 	}
 
 	@Override
-	public EnvelopeBuilder getBoundingBox() {
-		double top = northLat;
-		double left = westLon;
-		double bottom = southLat;
-		double right = eastLon;
-		EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new Coordinate(top, left),
-				new Coordinate(bottom, right));
-		// EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new
-		// Coordinate(0, 10), new Coordinate(10, 0));
-		return envBuilder;
+	public void parseBoundingBox(Map<String, Object> result) {
+
+		northLat = 0;
+		southLat = 0;
+		westLon = 0;
+		eastLon = 0;
+		if (result.get("DatasetCoverage-NorthLat") != null) {
+			northLat = Double.parseDouble((String) result.get("DatasetCoverage-NorthLat"));
+		}
+
+		if (result.get("DatasetCoverage-SouthLat") != null) {
+			southLat = Double.parseDouble((String) result.get("DatasetCoverage-SouthLat"));
+		}
+
+		if (result.get("DatasetCoverage-WestLon") != null) {
+			westLon = Double.parseDouble((String) result.get("DatasetCoverage-WestLon"));
+		}
+
+		if (result.get("DatasetCoverage-EastLon") != null) {
+			eastLon = Double.parseDouble((String) result.get("DatasetCoverage-EastLon"));
+		}
 	}
+
 }

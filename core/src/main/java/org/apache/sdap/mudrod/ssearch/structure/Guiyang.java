@@ -92,6 +92,14 @@ public class Guiyang extends SResult {
 	  return topic;
   }
   
+  public double getDate(Map<String, Object> result) {
+	  HashMap metadata_Hash = (HashMap) result.get("metadata");
+	  HashMap metainfo_Hash = (HashMap) metadata_Hash.get("metainfo");
+	  double date = (double) metainfo_Hash.get("metd");
+	  
+	  return date;
+  }
+  
   public String getValue(Map<String, Object> result, String name) {
 	  String[] names = name.split(".");
 	  for(String s : names) {

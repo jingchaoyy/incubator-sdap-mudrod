@@ -25,6 +25,7 @@ import org.apache.sdap.mudrod.discoveryengine.DiscoveryStepAbstract;
 import org.apache.sdap.mudrod.driver.ESDriver;
 import org.apache.sdap.mudrod.driver.SparkDriver;
 import org.apache.sdap.mudrod.main.MudrodConstants;
+import org.apache.sdap.mudrod.metadata.structure.GuiyangMetadata;
 import org.apache.sdap.mudrod.metadata.structure.Metadata;
 import org.apache.sdap.mudrod.metadata.structure.PODAACMetadata;
 import org.apache.sdap.mudrod.ssearch.structure.PlanetDefense;
@@ -163,9 +164,18 @@ public class ApiHarvester extends DiscoveryStepAbstract {
 				String id =  hit.getId();
 				EnvelopeBuilder envBuilder  = ShapeBuilders.newEnvelope(new Coordinate(0, 10), new Coordinate(10, 0)); //default
 				String format = props.getProperty(MudrodConstants.RANKING_META_FORMAT);
+				Metadata metadata = null;
 				if(MudrodConstants.PODAAC_META_FORMAT.equals(format)){
-					Metadata metadata = new PODAACMetadata(result, es, index);
-				    envBuilder  = metadata.getBoundingBox();
+					metadata = new PODAACMetadata(result, es, index);
+				    
+				}
+				else if(MudrodConstants.GUIYANG_META_FORMAT.equals(format)){
+					metadata = new GuiyangMetadata(result, es, index);
+				    
+				}
+				
+				if(null != metadata) {
+					envBuilder  = metadata.getBoundingBox();
 				}
   	
 				UpdateRequest ur = new UpdateRequest(index, type, id).doc(jsonBuilder().startObject().field("metedataspatialcoverage", envBuilder).endObject());
