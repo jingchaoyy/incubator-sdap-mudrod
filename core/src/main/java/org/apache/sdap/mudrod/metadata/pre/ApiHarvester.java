@@ -14,21 +14,37 @@
 package org.apache.sdap.mudrod.metadata.pre;
 
 import com.google.gson.JsonArray;
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.vividsolutions.jts.geom.Coordinate;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.sdap.mudrod.discoveryengine.DiscoveryStepAbstract;
 import org.apache.sdap.mudrod.driver.ESDriver;
 import org.apache.sdap.mudrod.driver.SparkDriver;
 import org.apache.sdap.mudrod.main.MudrodConstants;
+import org.apache.sdap.mudrod.metadata.structure.Metadata;
+import org.apache.sdap.mudrod.metadata.structure.PODAACMetadata;
+import org.apache.sdap.mudrod.ssearch.structure.PlanetDefense;
+import org.apache.sdap.mudrod.ssearch.structure.Podaac;
 import org.apache.sdap.mudrod.utils.HttpRequest;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.common.geo.builders.EnvelopeBuilder;
+import org.elasticsearch.common.geo.builders.ShapeBuilders;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -38,7 +54,7 @@ public class ApiHarvester extends DiscoveryStepAbstract {
 
   private static final long serialVersionUID = 1L;
   private static final Logger LOG = LoggerFactory.getLogger(ApiHarvester.class);
-
+  protected static final String METADATA_MAPPINGS = "metadata_mapping.json";
   /**
    * Creates a new instance of ApiHarvester.
    *
@@ -63,6 +79,17 @@ public class ApiHarvester extends DiscoveryStepAbstract {
     addMetadataMapping();
     importToES();
     es.destroyBulkProcessor();
+    System.out.println("Finish add metadata");
+    
+    es.createBulkProcessor();
+	try {
+		addGeoEnvelope();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println("Finish add spatial range!!!");
+    es.destroyBulkProcessor();
     endTime = System.currentTimeMillis();
     es.refreshIndex();
     LOG.info("Metadata harvesting completed. Time elapsed: {}", (endTime - startTime) / 1000);
@@ -74,14 +101,19 @@ public class ApiHarvester extends DiscoveryStepAbstract {
    * invoke this method before import metadata to Elasticsearch.
    */
   public void addMetadataMapping() {
-    String mappingJson = "{\r\n   \"dynamic_templates\": " + "[\r\n      " + "{\r\n         \"strings\": " + "{\r\n            \"match_mapping_type\": \"string\","
-        + "\r\n            \"mapping\": {\r\n               \"type\": \"text\"," + "\r\n               \"fielddata\": true," + "\r\n               \"analyzer\": \"english\","
-        + "\r\n            \"fields\": {\r\n               \"raw\": {" + "\r\n               \"type\": \"string\"," + "\r\n               \"index\": \"not_analyzed\"" + "\r\n            }"
-        + "\r\n         }\r\n " + "\r\n            }" + "\r\n         }\r\n      }\r\n   ]\r\n}";
 
-    es.getClient().admin().indices().preparePutMapping(props.getProperty(MudrodConstants.ES_INDEX_NAME)).setType(props.getProperty(MudrodConstants.RAW_METADATA_TYPE)).setSource(mappingJson).execute()
-        .actionGet();
-  }
+		InputStream mappingsStream = getClass().getClassLoader().getResourceAsStream(METADATA_MAPPINGS);
+		JSONObject mappingJSON = null;
+		try {
+			mappingJSON = new JSONObject(IOUtils.toString(mappingsStream));
+		} catch (JSONException | IOException e1) {
+			LOG.error("Error reading Elasticsearch mappings!", e1);
+		}
+
+		es.getClient().admin().indices().preparePutMapping(props.getProperty(MudrodConstants.ES_INDEX_NAME))
+				.setType(props.getProperty(MudrodConstants.RAW_METADATA_TYPE)).setSource(mappingJSON.toString())
+				.execute().actionGet();
+	}
 
   /**
    * importToES: Index metadata into elasticsearch from local file directory.
@@ -116,6 +148,37 @@ public class ApiHarvester extends DiscoveryStepAbstract {
       LOG.error("Error indexing metadata record!", e);
     }
   }
+  
+  private void addGeoEnvelope() throws IOException {
+	  	es.refreshIndex();
+		String index = props.getProperty(MudrodConstants.ES_INDEX_NAME);
+		String type = props.getProperty(MudrodConstants.RAW_METADATA_TYPE);
+		SearchResponse scrollResp = es.getClient().prepareSearch(index).setTypes(type)
+				.setQuery(QueryBuilders.matchAllQuery()).setScroll(new TimeValue(60000)).setSize(100).execute()
+				.actionGet();
+
+		while (true) {
+			for (SearchHit hit : scrollResp.getHits().getHits()) {
+				Map<String, Object> result = hit.getSource();
+				String id =  hit.getId();
+				EnvelopeBuilder envBuilder  = ShapeBuilders.newEnvelope(new Coordinate(0, 10), new Coordinate(10, 0)); //default
+				String format = props.getProperty(MudrodConstants.RANKING_META_FORMAT);
+				if(MudrodConstants.PODAAC_META_FORMAT.equals(format)){
+					Metadata metadata = new PODAACMetadata(result, es, index);
+				    envBuilder  = metadata.getBoundingBox();
+				}
+  	
+				UpdateRequest ur = new UpdateRequest(index, type, id).doc(jsonBuilder().startObject().field("metedataspatialcoverage", envBuilder).endObject());
+				es.getBulkProcessor().add(ur);
+			}
+			
+			scrollResp = es.getClient().prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000))
+					.execute().actionGet();
+			if (scrollResp.getHits().getHits().length == 0) {
+				break;
+			}
+		}
+	}
 
   /**
    * harvestMetadatafromWeb: Harvest metadata from PO.DAAC web service.
@@ -176,5 +239,4 @@ public class ApiHarvester extends DiscoveryStepAbstract {
   public Object execute(Object o) {
     return null;
   }
-
 }

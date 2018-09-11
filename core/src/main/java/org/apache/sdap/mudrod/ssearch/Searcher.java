@@ -68,7 +68,7 @@ public class Searcher extends MudrodAbstract implements Serializable {
    * @return a list of search result
    */
   @SuppressWarnings("unchecked")
-  public List<SResult> searchByQuery(String index, String type, String query, String queryOperator, String rankOption) {
+  public List<SResult> searchByQuery(String index, String type, String query, String queryOperator, String bbox, String rankOption) {
     boolean exists = es.getClient().admin().indices().prepareExists(index).execute().actionGet().isExists();
     if (!exists) {
       return new ArrayList<>();
@@ -127,6 +127,14 @@ public class Searcher extends MudrodAbstract implements Serializable {
 
     Dispatcher dp = new Dispatcher(this.getConfig(), this.getES(), null);
     BoolQueryBuilder qb = dp.createSemQuery(query, 1.0, queryOperator);
+    
+    //String bbox = "0,10,10,0";
+    //String bbox = "-10,-10,-5,-5";
+    
+    qb = dp.addSpatialRestriction(qb, bbox);
+    
+    System.out.println(qb);
+    
     List<SResult> resultList = new ArrayList<>();
     SearchRequestBuilder builder = es.getClient().prepareSearch(index).setTypes(type).setQuery(qb).addSort(sortFiled, order).setSize(500).setTrackScores(true);
     System.out.print(qb);
@@ -161,8 +169,8 @@ public class Searcher extends MudrodAbstract implements Serializable {
    *          selected ranking method
    * @return search results
    */
-  public String ssearch(String index, String type, String query, String queryOperator, String rankOption, Ranker rr) {
-    List<SResult> li = searchByQuery(index, type, query, queryOperator, rankOption);
+  public String ssearch(String index, String type, String query, String queryOperator, String bbox, String rankOption, Ranker rr) {
+    List<SResult> li = searchByQuery(index, type, query, queryOperator, bbox, rankOption);
     if ("Rank-SVM".equals(rankOption)) {
       li = rr.rank(li);
     }

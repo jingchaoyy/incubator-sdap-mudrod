@@ -147,6 +147,32 @@ mudrodControllers.controller('metadataViewCtrl', ['$rootScope', '$scope', '$loca
             $location.search(qParams);
         }
 
+        $scope.searchMetadataBbox = function (options) {
+            
+            var topLeft = options[1].toString();
+            var bottomRight = options[3].toString();
+            var bb = topLeft + "," + bottomRight;
+            searchMetadataWithBBOX(bb);
+        }
+
+        function searchMetadataWithBBOX(bb) {
+            console.log(bb);
+            MetaData.get({query: word, operator: opt, rankoption: rankopt, bbox: bb},
+                function success(response) {
+                    vm.PDItems = response.PDResults;
+                    vm.totalMatches = vm.PDItems.length;
+                    vm.query = word;
+                    vm.opt = opt;
+                    initController();
+                    $scope.searchComplete = true;
+                },
+                function error(errorResponse) {
+                    $scope.searchComplete = true;
+                    vm.searchError = {"status": errorResponse.status, "message": errorResponse.data};
+                }
+            );
+        }
+
         function searchMetadata() {
             MetaData.get({query: word, operator: opt, rankoption: rankopt},
                 function success(response) {

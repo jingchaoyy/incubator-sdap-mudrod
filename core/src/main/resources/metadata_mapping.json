@@ -1,0 +1,29 @@
+{
+	"dynamic_templates": [
+	{
+		"spatialcoverage": {
+		    "match": "metedataspatialcoverage",
+			"mapping": {
+				"type": "geo_shape"
+			}
+		}
+	},
+	{
+		"strings": {
+			"match_mapping_type": "string",
+			"unmatch": "metedataspatialcoverage",
+			"mapping": {
+				"type": "text",
+				"fielddata": true,
+				"analyzer": "english",
+				"fields": {
+					"raw": {
+						"type": "string",
+						"index": "not_analyzed"
+					}
+				}
+			}
+		}
+	}]
+}
+

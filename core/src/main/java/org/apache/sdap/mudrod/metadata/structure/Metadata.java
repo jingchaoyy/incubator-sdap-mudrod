@@ -20,32 +20,42 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.sdap.mudrod.driver.ESDriver;
+import org.elasticsearch.common.geo.builders.EnvelopeBuilder;
 
-public abstract class Metadata implements Serializable  {
+public abstract class Metadata implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  protected String shortname;
-  
-  public Metadata() {
-  }
+	private static final long serialVersionUID = 1L;
+	protected String shortname;
 
-  public Metadata(String shortname) {
-    this.shortname = shortname;
-  }
+	// spatial coverage
+	protected double northLat;
+	protected double southLat;
+	protected double westLon;
+	protected double eastLon;
 
-  /**
-   * getShortName:get short name of data set
-   *
-   * @return data set short name
-   */
-  public String getShortName() {
-    return this.shortname;
-  }
+	public Metadata() {
+		
+	}
 
-  /**
-   * getAbstract:get abstract of data set
-   *
-   * @return data set abstract
-   */
-  public abstract List<String> getAllTermList();
+	public Metadata(String shortname) {
+		this.shortname = shortname;
+	}
+
+	/**
+	 * getShortName:get short name of data set
+	 *
+	 * @return data set short name
+	 */
+	public String getShortName() {
+		return this.shortname;
+	}
+
+	/**
+	 * getAbstract:get abstract of data set
+	 *
+	 * @return data set abstract
+	 */
+	public abstract List<String> getAllTermList();
+
+	public abstract EnvelopeBuilder getBoundingBox();
 }

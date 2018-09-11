@@ -18,6 +18,8 @@ import org.apache.sdap.mudrod.driver.ESDriver;
 import org.apache.sdap.mudrod.driver.SparkDriver;
 import org.apache.sdap.mudrod.integration.LinkageIntegration;
 import org.apache.sdap.mudrod.main.MudrodConstants;
+import org.elasticsearch.common.geo.ShapeRelation;
+import org.elasticsearch.common.geo.builders.ShapeBuilders;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
@@ -25,10 +27,19 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.vividsolutions.jts.geom.Coordinate;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import org.elasticsearch.common.geo.ShapeRelation;
+import org.elasticsearch.common.geo.builders.EnvelopeBuilder;
+import org.elasticsearch.common.geo.builders.ShapeBuilder;
+import org.elasticsearch.common.geo.builders.ShapeBuilders;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 /**
  * Supports ability to transform regular user query into a semantic query
@@ -103,15 +114,38 @@ public class Dispatcher extends MudrodAbstract {
     BoolQueryBuilder qb = new BoolQueryBuilder();
     for (Entry<String, Double> entry : selected_Map.entrySet()) {
       if (query_operator.toLowerCase().trim().equals("phrase")) {
-        qb.should(QueryBuilders.multiMatchQuery(entry.getKey(), fieldsList).boost(entry.getValue().floatValue()).type(MultiMatchQueryBuilder.Type.PHRASE).tieBreaker((float) 0.5));
+        qb.must(QueryBuilders.multiMatchQuery(entry.getKey(), fieldsList).boost(entry.getValue().floatValue()).type(MultiMatchQueryBuilder.Type.PHRASE).tieBreaker((float) 0.5));
       } else if (query_operator.toLowerCase().trim().equals("and")) {
-        qb.should(QueryBuilders.multiMatchQuery(entry.getKey(), fieldsList).boost(entry.getValue().floatValue()).operator(MatchQueryBuilder.DEFAULT_OPERATOR.AND).tieBreaker((float) 0.5));
+        qb.must(QueryBuilders.multiMatchQuery(entry.getKey(), fieldsList).boost(entry.getValue().floatValue()).operator(MatchQueryBuilder.DEFAULT_OPERATOR.AND).tieBreaker((float) 0.5));
       } else {
-        qb.should(QueryBuilders.multiMatchQuery(entry.getKey(), fieldsList).boost(entry.getValue().floatValue()).operator(MatchQueryBuilder.DEFAULT_OPERATOR.OR).tieBreaker((float) 0.5));
+        qb.must(QueryBuilders.multiMatchQuery(entry.getKey(), fieldsList).boost(entry.getValue().floatValue()).operator(MatchQueryBuilder.DEFAULT_OPERATOR.OR).tieBreaker((float) 0.5));
       }
     }
 
     return qb;
   }
+  
+   //add spatial restrication
+	public BoolQueryBuilder addSpatialRestriction(BoolQueryBuilder qb, String bbox) {
+		String[] bboxCoords = bbox.split(",");
+		double top = Double.parseDouble(bboxCoords[0]);
+		double left = Double.parseDouble(bboxCoords[1]);
+		double bottom = Double.parseDouble(bboxCoords[2]);
+		double right = Double.parseDouble(bboxCoords[3]);
+
+		QueryBuilder geoQuery = null;
+		try {
+			geoQuery = QueryBuilders
+					.geoShapeQuery("metedataspatialcoverage",
+							ShapeBuilders.newEnvelope(new Coordinate(top, left), new Coordinate(bottom, right)))
+					.relation(ShapeRelation.WITHIN);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		qb.filter(geoQuery);
+		return qb;
+	}
 
 }

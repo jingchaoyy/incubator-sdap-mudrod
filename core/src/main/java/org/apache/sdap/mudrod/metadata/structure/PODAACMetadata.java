@@ -14,6 +14,10 @@
 package org.apache.sdap.mudrod.metadata.structure;
 
 import org.apache.sdap.mudrod.driver.ESDriver;
+import org.elasticsearch.common.geo.builders.EnvelopeBuilder;
+import org.elasticsearch.common.geo.builders.ShapeBuilders;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +124,26 @@ public class PODAACMetadata extends Metadata {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		northLat = 0;
+		southLat = 0;
+		westLon = 0;
+		eastLon = 0;
+		if (result.get("DatasetCoverage-NorthLat") != null) {
+			northLat = Double.parseDouble((String) result.get("DatasetCoverage-NorthLat"));
+		}
+
+		if (result.get("DatasetCoverage-SouthLat") != null) {
+			southLat = Double.parseDouble((String) result.get("DatasetCoverage-SouthLat"));
+		}
+
+		if (result.get("DatasetCoverage-WestLon") != null) {
+			westLon = Double.parseDouble((String) result.get("DatasetCoverage-WestLon"));
+		}
+
+		if (result.get("DatasetCoverage-EastLon") != null) {
+			eastLon = Double.parseDouble((String) result.get("DatasetCoverage-EastLon"));
+		}
 	}
 
 	/**
@@ -132,240 +156,262 @@ public class PODAACMetadata extends Metadata {
 		this.splitString(termstr, this.termList);
 	}
 
-  /**
-   * setKeywords: set key word of data set
-   *
-   * @param keywords data set keywords
-   */
-  public void setKeywords(String keywords) {
-    this.splitString(keywords, this.keywordList);
-  }
+	/**
+	 * setKeywords: set key word of data set
+	 *
+	 * @param keywords
+	 *            data set keywords
+	 */
+	public void setKeywords(String keywords) {
+		this.splitString(keywords, this.keywordList);
+	}
 
-  /**
-   * setTopicList: set topic of data set
-   *
-   * @param topicStr data set topics
-   */
-  public void setTopicList(String topicStr) {
-    this.splitString(topicStr, this.topicList);
-  }
+	/**
+	 * setTopicList: set topic of data set
+	 *
+	 * @param topicStr
+	 *            data set topics
+	 */
+	public void setTopicList(String topicStr) {
+		this.splitString(topicStr, this.topicList);
+	}
 
-  /**
-   * setVaraliableList: set varilable of data set
-   *
-   * @param varilableStr data set variables
-   */
-  public void setVaraliableList(String varilableStr) {
-    this.splitString(varilableStr, this.variableList);
-  }
+	/**
+	 * setVaraliableList: set varilable of data set
+	 *
+	 * @param varilableStr
+	 *            data set variables
+	 */
+	public void setVaraliableList(String varilableStr) {
+		this.splitString(varilableStr, this.variableList);
+	}
 
-  /**
-   * setProjectList:set project of data set
-   *
-   * @param project data set projects
-   */
-  public void setProjectList(String project) {
-    this.splitString(project, this.projectList);
-  }
+	/**
+	 * setProjectList:set project of data set
+	 *
+	 * @param project
+	 *            data set projects
+	 */
+	public void setProjectList(String project) {
+		this.splitString(project, this.projectList);
+	}
 
-  /**
-   * setSourceList: set source of data set
-   *
-   * @param source data set sources
-   */
-  public void setSourceList(String source) {
-    this.splitString(source, this.sourceList);
-  }
+	/**
+	 * setSourceList: set source of data set
+	 *
+	 * @param source
+	 *            data set sources
+	 */
+	public void setSourceList(String source) {
+		this.splitString(source, this.sourceList);
+	}
 
-  /**
-   * setSensorList: set sensor of data set
-   *
-   * @param sensor data set sensors
-   */
-  public void setSensorList(String sensor) {
-    this.splitString(sensor, this.sensorList);
-  }
+	/**
+	 * setSensorList: set sensor of data set
+	 *
+	 * @param sensor
+	 *            data set sensors
+	 */
+	public void setSensorList(String sensor) {
+		this.splitString(sensor, this.sensorList);
+	}
 
-  /**
-   * setISOTopicList:set iso topic of data set
-   *
-   * @param isoTopic data set iso topics
-   */
-  public void setISOTopicList(String isoTopic) {
-    this.splitString(isoTopic, this.isotopicList);
-  }
+	/**
+	 * setISOTopicList:set iso topic of data set
+	 *
+	 * @param isoTopic
+	 *            data set iso topics
+	 */
+	public void setISOTopicList(String isoTopic) {
+		this.splitString(isoTopic, this.isotopicList);
+	}
 
-  /**
-   * getKeywordList: get key word of data set
-   *
-   * @return data set keyword list
-   */
-  public List<String> getKeywordList() {
-    return this.keywordList;
-  }
+	/**
+	 * getKeywordList: get key word of data set
+	 *
+	 * @return data set keyword list
+	 */
+	public List<String> getKeywordList() {
+		return this.keywordList;
+	}
 
-  /**
-   * getTermList:get term list of data set
-   *
-   * @return data set term list
-   */
-  public List<String> getTermList() {
-    return this.termList;
-  }
+	/**
+	 * getTermList:get term list of data set
+	 *
+	 * @return data set term list
+	 */
+	public List<String> getTermList() {
+		return this.termList;
+	}
 
-  /**
-   * getShortName:get short name of data set
-   *
-   * @return data set short name
-   */
-  public String getShortName() {
-    return this.shortname;
-  }
+	/**
+	 * getShortName:get short name of data set
+	 *
+	 * @return data set short name
+	 */
+	public String getShortName() {
+		return this.shortname;
+	}
 
-  /**
-   * getKeyword:get key word of data set
-   *
-   * @return data set keyword string
-   */
-  public String getKeyword() {
-    return String.join(",", this.keywordList);
-  }
+	/**
+	 * getKeyword:get key word of data set
+	 *
+	 * @return data set keyword string
+	 */
+	public String getKeyword() {
+		return String.join(",", this.keywordList);
+	}
 
-  /**
-   * getTerm:get term of data set
-   *
-   * @return data set term string
-   */
-  public String getTerm() {
-    return String.join(",", this.termList);
-  }
+	/**
+	 * getTerm:get term of data set
+	 *
+	 * @return data set term string
+	 */
+	public String getTerm() {
+		return String.join(",", this.termList);
+	}
 
-  /**
-   * getTopic:get topic of data set
-   *
-   * @return data set topic string
-   */
-  public String getTopic() {
-    return String.join(",", this.topicList);
-  }
+	/**
+	 * getTopic:get topic of data set
+	 *
+	 * @return data set topic string
+	 */
+	public String getTopic() {
+		return String.join(",", this.topicList);
+	}
 
-  /**
-   * getVariable:get variable of data set
-   *
-   * @return data set variable string
-   */
-  public String getVariable() {
-    return String.join(",", this.variableList);
-  }
+	/**
+	 * getVariable:get variable of data set
+	 *
+	 * @return data set variable string
+	 */
+	public String getVariable() {
+		return String.join(",", this.variableList);
+	}
 
-  /**
-   * getAbstract:get abstract of data set
-   *
-   * @return data set abstract
-   */
-  public String getAbstract() {
-    return this.abstractStr;
-  }
+	/**
+	 * getAbstract:get abstract of data set
+	 *
+	 * @return data set abstract
+	 */
+	public String getAbstract() {
+		return this.abstractStr;
+	}
 
-  /**
-   * getProject:get project of data set
-   *
-   * @return data set project string
-   */
-  public String getProject() {
-    return this.project;
-  }
+	/**
+	 * getProject:get project of data set
+	 *
+	 * @return data set project string
+	 */
+	public String getProject() {
+		return this.project;
+	}
 
-  /**
-   * getSource:get source of data set
-   *
-   * @return data set source string
-   */
-  public String getSource() {
-    return this.source;
-  }
+	/**
+	 * getSource:get source of data set
+	 *
+	 * @return data set source string
+	 */
+	public String getSource() {
+		return this.source;
+	}
 
-  /**
-   * getSensor:get sensor of data set
-   *
-   * @return data set sensor string
-   */
-  public String getSensor() {
-    return this.sensor;
-  }
+	/**
+	 * getSensor:get sensor of data set
+	 *
+	 * @return data set sensor string
+	 */
+	public String getSensor() {
+		return this.sensor;
+	}
 
-  /**
-   * getISOTopic:get iso topic of data set
-   *
-   * @return data set ISO topic string
-   */
-  public String getISOTopic() {
-    return this.isoTopic;
-  }
+	/**
+	 * getISOTopic:get iso topic of data set
+	 *
+	 * @return data set ISO topic string
+	 */
+	public String getISOTopic() {
+		return this.isoTopic;
+	}
 
-  /**
-   * getAllTermList: get all term list of data set
-   *
-   * @return data set term list
-   */
-  public List<String> getAllTermList() {
-    List<String> allterms = new ArrayList<>();
+	/**
+	 * getAllTermList: get all term list of data set
+	 *
+	 * @return data set term list
+	 */
+	public List<String> getAllTermList() {
+		List<String> allterms = new ArrayList<>();
 
-    if (this.termList != null && !this.termList.isEmpty()) {
-      allterms.addAll(this.termList);
-    }
+		if (this.termList != null && !this.termList.isEmpty()) {
+			allterms.addAll(this.termList);
+		}
 
-    if (this.keywordList != null && !this.keywordList.isEmpty()) {
-      allterms.addAll(this.keywordList);
-    }
+		if (this.keywordList != null && !this.keywordList.isEmpty()) {
+			allterms.addAll(this.keywordList);
+		}
 
-    if (this.topicList != null && !this.topicList.isEmpty()) {
-      allterms.addAll(this.topicList);
-    }
+		if (this.topicList != null && !this.topicList.isEmpty()) {
+			allterms.addAll(this.topicList);
+		}
 
-    if (this.variableList != null && !this.variableList.isEmpty()) {
-      allterms.addAll(this.variableList);
-    }
+		if (this.variableList != null && !this.variableList.isEmpty()) {
+			allterms.addAll(this.variableList);
+		}
 
-    if (this.regionList != null && !this.regionList.isEmpty()) {
-      allterms.addAll(this.regionList);
-    }
-    return allterms;
-  }
+		if (this.regionList != null && !this.regionList.isEmpty()) {
+			allterms.addAll(this.regionList);
+		}
+		return allterms;
+	}
 
-  /**
-   * splitString: split value of fields of data set
-   *
-   * @param oristr original string
-   * @param list   result after splitting
-   */
-  private void splitString(String oristr, List<String> list) {
-    if (oristr == null) {
-      return;
-    }
+	/**
+	 * splitString: split value of fields of data set
+	 *
+	 * @param oristr
+	 *            original string
+	 * @param list
+	 *            result after splitting
+	 */
+	private void splitString(String oristr, List<String> list) {
+		if (oristr == null) {
+			return;
+		}
 
-    if (oristr.startsWith("\"")) {
-      oristr = oristr.substring(1);
-    }
-    if (oristr.endsWith("\"")) {
-      oristr = oristr.substring(0, oristr.length() - 1);
-    }
+		if (oristr.startsWith("\"")) {
+			oristr = oristr.substring(1);
+		}
+		if (oristr.endsWith("\"")) {
+			oristr = oristr.substring(0, oristr.length() - 1);
+		}
 
-    String strs[] = oristr.trim().split(",");
-    if (strs != null) {
-      for (String str1 : strs) {
-        String str = str1.trim();
-        if (str.startsWith(",") || str.startsWith("\"")) {
-          str = str.substring(1);
-        }
-        if (str.endsWith(",") || str.endsWith("\"")) {
-          str = str.substring(0, str.length() - 1);
-        }
-        if ("".equals(str)) {
-          continue;
-        }
-        list.add(str);
-      }
-    }
-  }
+		String strs[] = oristr.trim().split(",");
+		if (strs != null) {
+			for (String str1 : strs) {
+				String str = str1.trim();
+				if (str.startsWith(",") || str.startsWith("\"")) {
+					str = str.substring(1);
+				}
+				if (str.endsWith(",") || str.endsWith("\"")) {
+					str = str.substring(0, str.length() - 1);
+				}
+				if ("".equals(str)) {
+					continue;
+				}
+				list.add(str);
+			}
+		}
+	}
+
+	@Override
+	public EnvelopeBuilder getBoundingBox() {
+		double top = northLat;
+		double left = westLon;
+		double bottom = southLat;
+		double right = eastLon;
+		EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new Coordinate(top, left),
+				new Coordinate(bottom, right));
+		// EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new
+		// Coordinate(0, 10), new Coordinate(10, 0));
+		return envBuilder;
+	}
 }
