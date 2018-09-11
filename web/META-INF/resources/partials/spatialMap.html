@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/leaflet.draw.css" />
     <script src="../js/libs/leaflet.js"></script>
 	<script src="../js/libs/leaflet.draw.js"></script>
+	
 
 	<style>
 		html, body {
@@ -31,7 +32,7 @@
 	</style>
 </head>
 <div id='map'></div>
-<button class='apply' id='apply' onclick="ApplySpatialSearch()">Apply</button>
+<button class='apply' id='apply' onclick="ApplySpatialSearch()" >Apply</button>
 
 <script type="text/javascript">
 
@@ -102,6 +103,8 @@
     });
 
 	function ApplySpatialSearch(){
-		console.log(geom.geometry.coordinates[0]);
+		var options = geom.geometry.coordinates[0]
+		var scope = angular.element(document.getElementById('container')).scope();
+		var retrunValue = scope.searchMetadataBbox(options);
 	}
 </script>
