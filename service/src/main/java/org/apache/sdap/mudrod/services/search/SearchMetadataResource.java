@@ -60,16 +60,13 @@ public class SearchMetadataResource {
   @Path("/search")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes("text/plain")
-  public Response searchMetadata(@QueryParam("query") String query, @QueryParam("operator") String operator, @QueryParam("rankoption") String rankoption) {
+  public Response searchMetadata(@QueryParam("query") String query, @QueryParam("operator") String operator, @QueryParam("rankoption") String rankoption, @QueryParam("bbox") String bbox) {
     Properties config = mEngine.getConfig();
-    String bbox = "-10,-10,-5,-5";
     String fileList = searcher
-        .ssearch(config.getProperty(MudrodConstants.ES_INDEX_NAME), config.getProperty(MudrodConstants.RAW_METADATA_TYPE), query, operator, //please replace it with and, or, phrase
-            bbox, rankoption, ranker);
+        .ssearch(config.getProperty(MudrodConstants.ES_INDEX_NAME), config.getProperty(MudrodConstants.RAW_METADATA_TYPE), query, operator, bbox, rankoption, ranker);
     Gson gson = new GsonBuilder().create();
     String json = gson.toJson(gson.fromJson(fileList, JsonObject.class));
-    LOG.debug("Response received: {}", json);
+    LOG.debug("Response received from bbox: {}", json);
     return Response.ok(json, MediaType.APPLICATION_JSON).build();
   }
-
 }
