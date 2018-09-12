@@ -131,16 +131,16 @@ public class Dispatcher extends MudrodAbstract {
 			return qb;
 		}
 		String[] bboxCoords = bbox.split(",");
-		double top = Double.parseDouble(bboxCoords[0]);
-		double left = Double.parseDouble(bboxCoords[1]);
-		double bottom = Double.parseDouble(bboxCoords[2]);
-		double right = Double.parseDouble(bboxCoords[3]);
+		double top = Double.parseDouble(bboxCoords[1]);
+		double left = Double.parseDouble(bboxCoords[0]);
+		double bottom = Double.parseDouble(bboxCoords[3]);
+		double right = Double.parseDouble(bboxCoords[2]);
 
 		QueryBuilder geoQuery = null;
 		try {
 			geoQuery = QueryBuilders
 					.geoShapeQuery("metedataspatialcoverage",
-							ShapeBuilders.newEnvelope(new Coordinate(left, top), new Coordinate(right, bottom)))
+							ShapeBuilders.newEnvelope(new Coordinate(left % 180, top % 90), new Coordinate(right % 180, bottom % 90)))
 					.relation(ShapeRelation.WITHIN);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
