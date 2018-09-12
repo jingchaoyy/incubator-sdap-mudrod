@@ -162,7 +162,7 @@ public class ApiHarvester extends DiscoveryStepAbstract {
 			for (SearchHit hit : scrollResp.getHits().getHits()) {
 				Map<String, Object> result = hit.getSource();
 				String id =  hit.getId();
-				EnvelopeBuilder envBuilder  = ShapeBuilders.newEnvelope(new Coordinate(0, 10), new Coordinate(10, 0)); //default
+				EnvelopeBuilder envBuilder  = ShapeBuilders.newEnvelope(new Coordinate(0, 0), new Coordinate(0, 0)); //default
 				String format = props.getProperty(MudrodConstants.RANKING_META_FORMAT);
 				Metadata metadata = null;
 				if(MudrodConstants.PODAAC_META_FORMAT.equals(format)){
@@ -175,6 +175,7 @@ public class ApiHarvester extends DiscoveryStepAbstract {
 				}
 				
 				if(null != metadata) {
+					metadata.parseBoundingBox(result);
 					envBuilder  = metadata.getBoundingBox();
 				}
   	

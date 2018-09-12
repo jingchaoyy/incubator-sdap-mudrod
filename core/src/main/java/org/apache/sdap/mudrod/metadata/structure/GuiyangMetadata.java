@@ -53,32 +53,31 @@ public class GuiyangMetadata extends Metadata {
 		eastLon = 0;
 		
 		List<String> bbox = getBbox(result);
-		if (result.get("DatasetCoverage-NorthLat") != null) {
+		if (bbox.size() > 0) {
 			northLat = Double.parseDouble(bbox.get(0));
-		}
-
-		if (result.get("DatasetCoverage-SouthLat") != null) {
 			southLat = Double.parseDouble(bbox.get(1));
-		}
-
-		if (result.get("DatasetCoverage-WestLon") != null) {
 			westLon = Double.parseDouble(bbox.get(2));
-		}
-
-		if (result.get("DatasetCoverage-EastLon") != null) {
 			eastLon = Double.parseDouble(bbox.get(3));
 		}
+
 	}
 	
 	  public List<String> getBbox(Map<String, Object> result) {
+		  String north = "0";
+		  String south = "0";
+		  String east = "0";
+		  String west = "0";
+		  
 		  HashMap metadata_Hash = (HashMap) result.get("metadata");
-		  HashMap idinfo_Hash = (HashMap) metadata_Hash.get("idinfo");
+		  HashMap idinfo_Hash = (HashMap) metadata_Hash.get("idinfo");			  
 		  HashMap spdom_Hash = (HashMap) idinfo_Hash.get("spdom");
 		  HashMap bounding_Hash = (HashMap) spdom_Hash.get("bounding");
-		  String west = (String) bounding_Hash.get("westbc");
-		  String east = (String) bounding_Hash.get("eastbc");
-		  String north = (String) bounding_Hash.get("northbc");
-		  String south = (String) bounding_Hash.get("southbc");
+		  
+		  west = (String) bounding_Hash.get("westbc");
+		  east = (String) bounding_Hash.get("eastbc");
+		  north = (String) bounding_Hash.get("northbc");
+		  south = (String) bounding_Hash.get("southbc");
+			  
 		  
 		  List<String> bbox = new ArrayList<String>();
 		  bbox.add(north);

@@ -67,8 +67,8 @@ public abstract class Metadata implements Serializable {
 		double left = westLon;
 		double bottom = southLat;
 		double right = eastLon;
-		EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new Coordinate(top, left),
-				new Coordinate(bottom, right));
+		EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new Coordinate(left, top),
+				new Coordinate(right, bottom));
 		// EnvelopeBuilder envBuilder = ShapeBuilders.newEnvelope(new
 		// Coordinate(0, 10), new Coordinate(10, 0));
 		return envBuilder;

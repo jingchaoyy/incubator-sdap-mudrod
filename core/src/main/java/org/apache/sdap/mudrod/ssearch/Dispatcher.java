@@ -127,6 +127,9 @@ public class Dispatcher extends MudrodAbstract {
   
    //add spatial restrication
 	public BoolQueryBuilder addSpatialRestriction(BoolQueryBuilder qb, String bbox) {
+		if (bbox == null) {
+			return qb;
+		}
 		String[] bboxCoords = bbox.split(",");
 		double top = Double.parseDouble(bboxCoords[0]);
 		double left = Double.parseDouble(bboxCoords[1]);
@@ -137,7 +140,7 @@ public class Dispatcher extends MudrodAbstract {
 		try {
 			geoQuery = QueryBuilders
 					.geoShapeQuery("metedataspatialcoverage",
-							ShapeBuilders.newEnvelope(new Coordinate(top, left), new Coordinate(bottom, right)))
+							ShapeBuilders.newEnvelope(new Coordinate(left, top), new Coordinate(right, bottom)))
 					.relation(ShapeRelation.WITHIN);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
