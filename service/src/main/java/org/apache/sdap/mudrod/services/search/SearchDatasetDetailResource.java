@@ -60,7 +60,7 @@ public class SearchDatasetDetailResource {
     Properties config = mEngine.getConfig();
     String dataDetailJson = null;
     try {
-      String query = "Dataset-ShortName:\"" + shortName + "\"";
+      String query = "metadata.idinfo.citation.citeinfo.title:\"" + shortName + "\"";
       dataDetailJson = mEngine.getESDriver().searchByQuery(config.getProperty(MudrodConstants.ES_INDEX_NAME), config.getProperty(MudrodConstants.RAW_METADATA_TYPE), query, true);
     } catch (InterruptedException | ExecutionException | IOException e) {
       LOG.error("Error whilst searching for a Dataset-ShortName: ", e);
