@@ -26,8 +26,8 @@
                     <table class="table table-strip">
                         <tbody>
                         <tr>
-                            <td>长命名</td>
-                            <td>{{dataset['Long Name']}}</td>
+                            <td>关键字</td>
+                            <td>{{dataset['Topic']}}</td>
                         </tr>
                         <tr>
                             <td>主页</td>
@@ -56,20 +56,24 @@
                         </tr>
                         <tr>
                             <td>介绍</td>
-                            <td>{{dataset['Dataset-Description']}}</td>
+                            <td>{{dataset['Dataset-Abstract']}}</td>
                         </tr>
                         <tr>
-                            <td>处理级别</td>
-                            <td>{{dataset['Processing Level']}}</td>
+                            <td>目的</td>
+                            <td>{{dataset['Dataset-Purpose']}}</td>
+                        </tr>
+                        <tr>
+                            <td>坐標投影</td>
+                            <td>{{dataset['Projection']}}</td>
                         </tr>
                         <tr>
                             <td>覆盖范围</td>
                             <td>
                                	 区域： {{dataset['Region'].join(', ')}}<br>
-                               	 最北点纬度： {{dataset['NorthLat']}} 度<br>
-                               	 最南点纬度： {{dataset['NorthLat']}} 度<br>
-                               	 最西点纬度： {{dataset['WestLon']}} 度<br>
-                               	 最东点纬度： {{dataset['EastLon']}} 度<br>
+                               	 最北点纬度： {{dataset['NorthLat']}}<br>
+                               	 最南点纬度： {{dataset['SouthLat']}}<br>
+                               	 最西点纬度： {{dataset['WestLon']}}<br>
+                               	 最东点纬度： {{dataset['EastLon']}}<br>
                                	 时间跨度： {{dataset['Time Span']}}
                             </td>
                         </tr>
