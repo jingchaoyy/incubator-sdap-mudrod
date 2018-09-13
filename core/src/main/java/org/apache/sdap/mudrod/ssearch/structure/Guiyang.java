@@ -134,4 +134,57 @@ public class Guiyang extends SResult {
 
 		return value;
 	}
+	
+//	public String getValue(Map<String, Object> result) {
+//		
+//		String tmpPrekey = "";
+//		for(String key: result.keySet()) {
+//			
+//			
+//			
+//			
+//			
+//			
+//			tmpPrekey += key + ".";
+//			Object value = result.get(key);
+//			while(value.getClass().equals(HashMap.class)) {
+//				
+//				Map map = (HashMap)value;
+//				for(String key: map.keySet()) {
+//					
+//					tmpPrekey += key + ".";
+//					Object value = result.get(key);
+//					
+//					
+//					
+//				}
+//				
+//			}
+//			
+//			
+//		}
+//		
+//		
+//		String[] names = name.split("-");
+//		int len = names.length;
+//		String value = "";
+//		HashMap metadata_Hash = null;
+//		HashMap metadata_Hash_temp = null;
+//		try {
+//			for (int i = 0; i < len - 1; i++) {
+//				if (i == 0) {
+//					metadata_Hash_temp = (HashMap) result.get(names[i]);
+//					metadata_Hash = metadata_Hash_temp;
+//				} else {
+//					metadata_Hash = (HashMap) metadata_Hash.get(names[i]);
+//				}
+//			}
+//
+//			value = (String) metadata_Hash.get(names[len - 1]);
+//		} catch (Exception e) {
+//			value = "";
+//		}
+//
+//		return value;
+//	}
 }
