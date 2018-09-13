@@ -348,8 +348,8 @@ public class ESDriver implements Serializable {
 				
 				searchResult.put("NorthLat", coors.get(0).get(1));
 				searchResult.put("EastLon", coors.get(0).get(0));
-				searchResult.put("SouthLat", coors.get(1).get(3));
-				searchResult.put("WestLon", coors.get(1).get(2));
+				searchResult.put("SouthLat", coors.get(1).get(1));
+				searchResult.put("WestLon", coors.get(1).get(0));
 				
 
 //				// DatasetLocationPolicy-BasePath Should only contain ftp, http, or https URLs
