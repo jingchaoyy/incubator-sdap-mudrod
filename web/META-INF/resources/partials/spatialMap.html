@@ -34,12 +34,12 @@
 <script type="text/javascript">
 
 	var map = L.map('map', {
-		center: [27.618047, 107.416141],
-		zoom: 3
+		center: [26.648226, 106.631919],
+		zoom: 6
 	});
 
-	var basemaps = L.tileLayer.wms('https://demo.boundlessgeo.com/geoserver/ows?', {
-			layers: 'ne:ne_10m_admin_0_boundary_lines_land,ne:ne_10m_admin_0_countries'
+	var basemaps = L.tileLayer.wms('http://199.26.254.177:8080/geoserver/CISC/wms?', {
+			layers: 'CISC:Guizhou'
 		});
 
 	basemaps.addTo(map);

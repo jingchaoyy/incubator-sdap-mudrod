@@ -53,17 +53,27 @@ a:link, a:visited {
 }
 
 .view-area-fixed {
-    width: 100%;
     padding-top: 1em;
-    background-size: cover;
     background: transparent url('../images/OceanWave.jpg') no-repeat fixed 0 0;
+    padding-top: 1em; 
+    width: 100%;
+    height: 100%;
+    /* height: 800px; */
+    background-size: inherit;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .view-area-scroll {
     width: 100%;
-    height: 800px;
+    height: 100%;
+    /* height: 800px; */
+    background-size: inherit;
+    background: transparent url('../images/OceanWave.jpg') no-repeat fixed 0 0;
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
-    background: transparent url('../images/OceanWave.jpg') no-repeat scroll 0 0;
 }
 
 .landing-dialog {

@@ -11,6 +11,7 @@
   express or implied. See the License for the specific language 
   governing permissions and limitations under the License. 
   -->
+ <meta charset="utf-8">
 <div ng-include src="'partials/navbar-plain.html'"></div>
 
 <div id="container" class="container view-area-scroll">
@@ -24,13 +25,13 @@
                     <div class="form-group" style="position: relative">
 
                         <input id="query" type="search" class="form-control" ng-model="options.query" ng-keyup="complete(options.query)"
-                               placeholder="Enter ocean concepts (e.g. ocean wind) to search">
+                               placeholder="请输入查找关键字">
                         <button id="search-btn" ng-click="search(options)"
                                 type="submit">
                             <span class="ico-search"></span>
                         </button>
                         <div style="position: absolute; padding-top: 1em;">
-                            <label for="searchOption" style="padding-right: 1em;">查找方式：</label>
+                            <label for="searchOption" style="padding-right: 1em;">查找方式</label>
                             <div id="searchOption" class="btn-group" data-toggle="buttons">
                                 <label class="radio-inline">
                                     <input type="radio" ng-model="options.opt" value="Or">或
