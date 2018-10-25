@@ -27,6 +27,7 @@ import org.apache.sdap.mudrod.discoveryengine.MetadataDiscoveryEngine;
 import org.apache.sdap.mudrod.discoveryengine.OntologyDiscoveryEngine;
 import org.apache.sdap.mudrod.discoveryengine.RecommendEngine;
 import org.apache.sdap.mudrod.discoveryengine.WeblogDiscoveryEngine;
+import org.apache.sdap.mudrod.discoveryengine.PDRank;
 import org.apache.sdap.mudrod.driver.ESDriver;
 import org.apache.sdap.mudrod.driver.SparkDriver;
 import org.apache.sdap.mudrod.integration.LinkageIntegration;
@@ -283,6 +284,9 @@ public class MudrodEngine {
 	}
 
 	public void startRankPD() {
+
+		PDRank pdr = new PDRank(es, "mudrod", "RawMetadata");
+		System.out.println(pdr);
 
 	}
 
