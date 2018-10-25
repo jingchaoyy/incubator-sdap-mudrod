@@ -20,8 +20,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
 public class PDRank {
-	
-	String[] rankList = {"nasa"};
+
+	String[] rankList = { "nasa" };
 
 	public PDRank(ESDriver es, String index, String type) {
 		es.createBulkProcessor();
@@ -33,7 +33,7 @@ public class PDRank {
 		while (true) {
 			for (SearchHit hit : scrollResp.getHits().getHits()) {
 				String value = "";
-				String id =  hit.getId();
+				String id = hit.getId();
 
 				Map<String, Object> result = hit.getSource();
 				value = (String) result.get("url");
@@ -41,17 +41,17 @@ public class PDRank {
 				for (String var : rankList) {
 					if (value.contains(var)) {
 						int ranking = 0;
-						UpdateRequest ur = null ;
-						try {
-							ur = new UpdateRequest(index, type, id).doc(jsonBuilder().startObject().field("ranking", ranking).endObject());
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						UpdateRequest ur = null;
+						ur = updateES(ur, es, index, type, id, ranking);
+						es.getBulkProcessor().add(ur);
+					} else {
+						int ranking = 10;
+						UpdateRequest ur = null;
+						ur = updateES(ur, es, index, type, id, ranking);
 						es.getBulkProcessor().add(ur);
 					}
 				}
-				
+
 			}
 			scrollResp = es.getClient().prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000))
 					.execute().actionGet();
@@ -59,27 +59,19 @@ public class PDRank {
 				break;
 			}
 		}
-		
+
 		es.destroyBulkProcessor();
 	}
 
-//	  protected List<Metadata> loadMetadataFromES(ESDriver es, String index, String type) {
-//
-//		    List<Metadata> metadatas = new ArrayList<>();
-//		    SearchResponse scrollResp = es.getClient().prepareSearch(index).setTypes(type).setQuery(QueryBuilders.matchAllQuery()).setScroll(new TimeValue(60000)).setSize(100).execute().actionGet();
-//
-//		    while (true) {
-//		      for (SearchHit hit : scrollResp.getHits().getHits()) {
-//		        Map<String, Object> result = hit.getSource();
-//		        Metadata metadata = new PODAACMetadata(result, es, index);
-//		        metadatas.add(metadata);
-//		      }
-//		      scrollResp = es.getClient().prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000)).execute().actionGet();
-//		      if (scrollResp.getHits().getHits().length == 0) {
-//		        break;
-//		      }
-//		    }
-//
-//		    return metadatas;
-//		  }
+	public UpdateRequest updateES(UpdateRequest ur, ESDriver es, String index, String type, String id, int ranking) {
+		try {
+			ur = new UpdateRequest(index, type, id)
+					.doc(jsonBuilder().startObject().field("ranking", ranking).endObject());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ur;
+	}
+
 }
