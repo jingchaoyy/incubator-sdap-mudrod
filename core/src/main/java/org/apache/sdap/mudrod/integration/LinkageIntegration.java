@@ -149,7 +149,8 @@ public class LinkageIntegration extends DiscoveryStepAbstract {
    * @return a JSON object of related terms along with corresponding similarities
    */
   public JsonObject getIngeratedListInJson(String input) {
-    Map<String, Double> sortedMap = appyMajorRule(input);   
+    Map<String, Double> sortedMap = appyMajorRule(input);
+    System.out.println(sortedMap);
     int count = 0;
     Map<String, Double> trimmedMap = new LinkedHashMap<>();
     if(sortedMap!=null)

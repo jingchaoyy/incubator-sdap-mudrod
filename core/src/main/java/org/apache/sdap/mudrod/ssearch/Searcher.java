@@ -126,7 +126,7 @@ public class Searcher extends MudrodAbstract implements Serializable {
     }
 
     Dispatcher dp = new Dispatcher(this.getConfig(), this.getES(), null);
-    BoolQueryBuilder qb = dp.createSemQuery(query, 1.0, queryOperator);
+    BoolQueryBuilder qb = dp.createSemQuery(query, 0.5, queryOperator);
     
     //String bbox = "0,10,10,0";
     //String bbox = "-10,-10,-5,-5";

@@ -285,7 +285,7 @@ public class MudrodEngine {
 
 	public void startRankPD() {
 
-		PDRank pdr = new PDRank(es, "mudrod", "RawMetadata");
+		PDRank pdr = new PDRank(es, props.getProperty(MudrodConstants.ES_INDEX_NAME), "RawMetadata");
 		System.out.println(pdr);
 
 	}
